@@ -14,7 +14,19 @@ class Auth(QtWidgets.QMainWindow):
     def init_UI(self):
         self.setWindowTitle("diplome")
         self.setWindowIcon(QIcon("./img/free-icon-avatar-126486.png"))
-        self.ui.login.text()
+        self.ui.email.setPlaceholderText(" введите логин")
+        self.ui.pwd.setPlaceholderText(" введите пароль")
+        self.ui.login.clicked.connect(self.get_info)
+
+    def get_info(self):
+        email = self.ui.email.text()
+        pwd = self.ui.pwd.text()
+        if (email == "123" and pwd == "123"):
+            print(email)
+            print(pwd)
+        else:
+            print("no\n")
+            return (0)
 app = QtWidgets.QApplication([])
 application = Auth()
 application.show()
