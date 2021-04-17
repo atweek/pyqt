@@ -1,29 +1,22 @@
-from PyQt5 import QtWidgets, QtGui ,QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow
-ftom Q
+from PyQt5 import QtWidgets, QtGui, QtCore
+# from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtGui import QIcon
 import sys
-
+from disigner.login import Ui_Dialog as Ui_Auth
 #pyuic5.exe test.ui -o test.py -x
 
-# from PyQt5.Qt import *
+class Auth(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(Auth , self).__init__()
+        self.ui = Ui_Auth()
+        self.ui.setupUi(self)
+        self.init_UI()
+    def init_UI(self):
+        self.setWindowTitle("diplome")
+        self.setWindowIcon(QIcon("./img/free-icon-avatar-126486.png"))
+        self.ui.login.text()
+app = QtWidgets.QApplication([])
+application = Auth()
+application.show()
 
-def application():
-    app = QApplication(sys.argv)
-    window = QMainWindow()
-
-    window.setWindowTitle("test")
-    window.setGeometry(300, 250, 350, 200)
-    # window.height(680)
-    # window.minimumHeight(680)
-    # window.minimumWidth(920)
-    # window.Width(920)
-    # window.resize(920, 680)
-    main_text = QtWidgets.QLabel("dwdwd")
-
-
-    window.show()
-    # sys.exit(app.exit())
-    sys.exit(app.exec_())
-
-if __name__ == "__main__":
-        application()
+sys.exit(app.exec_())
