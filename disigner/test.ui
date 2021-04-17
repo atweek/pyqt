@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>920</width>
+    <height>680</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #808080</string>
+  </property>
+  <widget class="QPushButton" name="main">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Mongolian Baiti</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Главная</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/ramil/.designer/img/free-icon-star-126482.png</normaloff>C:/Users/ramil/.designer/img/free-icon-star-126482.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="activity">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>0</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Mongolian Baiti</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Создание мероприятий</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/ramil/.designer/img/free-icon-musical-note-126493.png</normaloff>C:/Users/ramil/.designer/img/free-icon-musical-note-126493.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="conf">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>0</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Mongolian Baiti</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>конференц-зал</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/ramil/.designer/img/free-icon-pie-chart-126484.png</normaloff>C:/Users/ramil/.designer/img/free-icon-pie-chart-126484.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="users">
+   <property name="geometry">
+    <rect>
+     <x>570</x>
+     <y>0</y>
+     <width>191</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Mongolian Baiti</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Пользователи</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/ramil/.designer/img/free-icon-avatar-126486.png</normaloff>C:/Users/ramil/.designer/img/free-icon-avatar-126486.png</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="setin">
+   <property name="geometry">
+    <rect>
+     <x>760</x>
+     <y>0</y>
+     <width>161</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Mongolian Baiti</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Настройки</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/ramil/.designer/img/free-icon-settings-126472.png</normaloff>C:/Users/ramil/.designer/img/free-icon-settings-126472.png</iconset>
+   </property>
+  </widget>
+  <widget class="QFrame" name="activity_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>150</y>
+     <width>431</width>
+     <height>501</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #C0C0C0</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QFrame" name="project">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>150</y>
+     <width>401</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #C0C0C0</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QFrame" name="info">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>310</y>
+     <width>401</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #C0C0C0</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
