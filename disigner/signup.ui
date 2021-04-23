@@ -10,22 +10,14 @@
     <height>680</height>
    </rect>
   </property>
-  <property name="font">
-   <font>
-    <italic>true</italic>
-   </font>
-  </property>
   <property name="windowTitle">
    <string>Dialog</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">background-color: #EAEAEA;</string>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>140</y>
+     <x>270</x>
+     <y>130</y>
      <width>351</width>
      <height>351</height>
     </rect>
@@ -40,7 +32,7 @@ background-color: #FFFFFF</string>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="email">
+   <widget class="QLineEdit" name="name">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -57,7 +49,7 @@ background-color: #FFFFFF</string>
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>280</y>
+      <y>290</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -73,14 +65,14 @@ background-color: #FFFFFF</string>
      <string notr="true">color: #1B76FF</string>
     </property>
     <property name="text">
-     <string>Sign up</string>
+     <string>Sign ip</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="login">
+   <widget class="QPushButton" name="signin">
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>230</y>
+      <y>240</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -99,10 +91,10 @@ background-color: #FFFFFF</string>
      <string notr="true">border-radius: 10px;background-color: #5099F2;color : #FFFFFF</string>
     </property>
     <property name="text">
-     <string>sign in</string>
+     <string>sign un</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="pwd">
+   <widget class="QLineEdit" name="email">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -115,37 +107,12 @@ background-color: #FFFFFF</string>
      <string notr="true">border-radius: 10px;background-color: #EAEAEA</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="help">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>190</y>
-      <width>181</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Montserrat</family>
-      <weight>50</weight>
-      <bold>false</bold>
-      <underline>false</underline>
-      <strikeout>false</strikeout>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #BABABA</string>
-    </property>
-    <property name="text">
-     <string>forgot your password?</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
       <x>140</x>
       <y>60</y>
-      <width>61</width>
+      <width>71</width>
       <height>21</height>
      </rect>
     </property>
@@ -158,14 +125,14 @@ background-color: #FFFFFF</string>
      </font>
     </property>
     <property name="text">
-     <string>Sign in</string>
+     <string>Sign up</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>280</y>
+      <y>290</y>
       <width>161</width>
       <height>16</height>
      </rect>
@@ -181,33 +148,26 @@ background-color: #FFFFFF</string>
      <string>don't have an account?</string>
     </property>
    </widget>
-   <widget class="QFrame" name="no">
+   <widget class="QLineEdit" name="pwd">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>153</y>
-      <width>16</width>
-      <height>16</height>
+      <x>70</x>
+      <y>190</y>
+      <width>211</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #FF0000;border-radius: 8px;</string>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+     <string notr="true">border-radius: 10px;background-color: #EAEAEA</string>
     </property>
    </widget>
-   <zorder>email</zorder>
-   <zorder>login</zorder>
+   <zorder>name</zorder>
+   <zorder>signin</zorder>
    <zorder>logup</zorder>
-   <zorder>pwd</zorder>
-   <zorder>help</zorder>
+   <zorder>email</zorder>
    <zorder>label</zorder>
    <zorder>label_2</zorder>
-   <zorder>no</zorder>
+   <zorder>pwd</zorder>
   </widget>
  </widget>
  <resources/>
