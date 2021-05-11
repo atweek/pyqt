@@ -11,7 +11,7 @@ $(NAME):
 	mv main.spec ./app
 
 py:
-	python3 $(SRC_BOT) &
+	#python3 $(SRC_BOT) &
 	python3 $(SRC_DESC)
 
 run:

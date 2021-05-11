@@ -1,5 +1,6 @@
-from PyQt5 import QtWidgets
+# from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon
+from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 from disigner.login import Ui_Dialog as Ui_Auth
 from disigner.mainwin import Ui_Dialog as Ui_MAIN
@@ -70,6 +71,11 @@ class main_win(QtWidgets.QMainWindow):
         self.init_UI()
     def init_UI(self):
         self.setWindowTitle("diplome")
+        av = f"/home/ramil/Desktop/pyqt/src_qt/avatar/{db.get_av()}.png"
+        print(av)
+        self.ui.avatar.setPixmap(QtGui.QPixmap(av))
+        # self.ui.avatar.setStyleSheet("border-radius: 5px;")
+
 
 class Auth(QtWidgets.QMainWindow):
     def __init__(self):
@@ -94,7 +100,9 @@ class Auth(QtWidgets.QMainWindow):
         name = self.ui.email.text()
         real_pwd = None
         try:
-            real_pwd = db.chaeck_pwd(name)[0]
+            real_pwd = db.chaeck_pwd(name)
+            # real_pwd = real_pwd[0]
+            print(id)
         except TypeError:
             self.ui.no.show()
         pwd = self.ui.pwd.text()
