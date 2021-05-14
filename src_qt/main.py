@@ -2,6 +2,7 @@
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
+import time
 from disigner.login import Ui_Dialog as Ui_Auth
 from disigner.mainwin import Ui_Dialog as Ui_MAIN
 from disigner.singup import Ui_Dialog as Ui_LOGUP
@@ -69,11 +70,59 @@ class main_win(QtWidgets.QMainWindow):
         self.ui = Ui_MAIN()
         self.ui.setupUi(self)
         self.init_UI()
+        # db.check_events()
+        self.init_events()
+    def init_events(self):
+        #SELECT name,disc,place,time,length FROM events  WHERE time > NOW() ORDER BY time;
+        info = db.check_events()
+        count = db.count_events()
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        if (True):
+            first_info = info[0]
+            # 2021-05-20 15:49:58.127311+03:00
+            self.ui.event_name.setText(first_info[0])
+            self.ui.event_desc.setText(first_info[1])
+            self.ui.event_place.setText(first_info[2])
+            s_time = str(first_info[3])
+            self.ui.event_date.setText(s_time[s_time.find(' ')+1:16])
+            self.ui.event_time.setText(str(first_info[4]) + "min")
+            self.ui.num_1.setText(s_time[8:10])
+            print(f"\n{int(s_time[5:7])}\n")
+            month = months[int(s_time[5:7]) - 1]
+            self.ui.mon_1.setText(month)
+        if (count > 1):
+            second_info = info[1]
+            self.ui.event_name_2.setText(second_info[0])
+            self.ui.event_desc_2.setText(second_info[1])
+            self.ui.event_place_2.setText(second_info[2])
+            s_time = str(second_info[3])
+            self.ui.event_date_2.setText(s_time[s_time.find(' ')+1:16])
+            self.ui.event_time_2.setText(str(second_info[4]) + "min")
+            self.ui.num_2.setText(s_time[8:10])
+            # self.ui.mon_2.setText(second_info[6])
+            month = months[int(s_time[5:7]) - 1]
+            self.ui.mon_2.setText(month)
+        if (count > 2):
+            th_info = info[2]
+            self.ui.event_name_3.setText(th_info[0])
+            self.ui.event_desc_3.setText(th_info[1])
+            self.ui.event_place_3.setText(th_info[2])
+            s_time = str(th_info[3])
+            self.ui.event_date_3.setText(s_time[s_time.find(' ') + 1:16])
+            self.ui.event_long_3.setText(str(th_info[4]) + "min")
+            self.ui.num_2.setText(s_time[8:10])
+            # self.ui.mon_2.setText(second_info[6])
+            month = months[int(s_time[5:7]) - 1]
+            self.ui.man_3.setText(month)
+    # sys.exit(app.exec_())
+
+
     def init_UI(self):
         self.setWindowTitle("diplome")
         av = f"/home/ramil/Desktop/pyqt/src_qt/avatar/{db.get_av()}.png"
-        print(av)
+        # print(av)
         self.ui.avatar.setPixmap(QtGui.QPixmap(av))
+        self.ui.name.setText(db.get_name())
         # self.ui.avatar.setStyleSheet("border-radius: 5px;")
 
 

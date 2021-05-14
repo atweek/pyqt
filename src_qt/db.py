@@ -37,3 +37,34 @@ class db():
         print ("INSERT 0 1")
         self.conn.commit()
         cursor.close()
+    def get_name(self):
+        cursor = self.conn.cursor()
+        cursor.execute(f"SELECT name FROM users WHERE id = '{self.id}';")
+        return cursor.fetchone()[0]
+        cursor.close()
+
+    def count_events(self):
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM events;")
+        ret = cursor.fetchone()[0]
+        cursor.close()
+        return ret
+
+    def check_events(self):
+        def clean_old():
+            cursor = self.conn.cursor()
+            cursor.execute("DELETE FROM events WHERE time < date(now())")
+            cursor.close()
+        def get_events():
+            cursor = self.conn.cursor()
+            cursor.execute("SELECT name,disc,place,time,length FROM events  WHERE time > NOW() ORDER BY time;")
+            ret = cursor.fetchall()
+            cursor.close()
+            return ret
+
+        clean_old()
+        # self.count = count_events()
+        # print(f"count = {self.count}\n")
+        info = get_events()
+        # print(info)
+        return info
