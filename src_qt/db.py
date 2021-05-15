@@ -42,11 +42,23 @@ class db():
         cursor.execute(f"SELECT name FROM users WHERE id = '{self.id}';")
         return cursor.fetchone()[0]
         cursor.close()
-
+    def count_task(self):
+        cursor = self.conn.cursor()
+        cursor.execute(f"SELECT COUNT(*) FROM tasks WHERE recipient_id = {self.id};")
+        ret = cursor.fetchone()[0]
+        cursor.close()
+        return ret
     def count_events(self):
         cursor = self.conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM events;")
         ret = cursor.fetchone()[0]
+        cursor.close()
+        return ret
+    def check_tasks(self):
+        cursor = self.conn.cursor()
+        cursor.execute(f"SELECT text,owner_id,recipient_id,users.name FROM tasks "
+                       f"INNER JOIN users ON users.id = tasks.owner_id WHERE recipient_id = {self.id};")
+        ret = cursor.fetchall()
         cursor.close()
         return ret
 

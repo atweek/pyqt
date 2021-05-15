@@ -72,12 +72,60 @@ class main_win(QtWidgets.QMainWindow):
         self.init_UI()
         # db.check_events()
         self.init_events()
+        self.off_task()
+        self.on_task()
+        self.init_task()
+    def init_task(self):
+        self.count_t = db.count_task()
+        info = db.check_tasks()
+        print(info)
+
+    def on_task(self):
+        self.count_t = db.count_task()
+        if (self.count_t > 0):
+            self.ui.task_1.show()
+        if (self.count_t > 1):
+            self.ui.task_2.show()
+        if (self.count_t > 2):
+            self.ui.task_3.show()
+        if (self.count_t > 3):
+            self.ui.task_4.show()
+        if (self.count_t > 4):
+            self.ui.task_5.show()
+        if (self.count_t > 5):
+            self.ui.task_6.show()
+        if (self.count_t > 6):
+            self.ui.task_7.show()
+        if (self.count_t > 7):
+            self.ui.task_8.show()
+        if (self.count_t > 8):
+            self.ui.task_9.show()
+        if (self.count_t > 9):
+            self.ui.task_10.show()
+    def off_task(self):
+        self.ui.task_1.hide()
+        self.ui.task_2.hide()
+        self.ui.task_3.hide()
+        self.ui.task_4.hide()
+        self.ui.task_5.hide()
+        self.ui.task_6.hide()
+        self.ui.task_7.hide()
+        self.ui.task_8.hide()
+        self.ui.task_9.hide()
+        self.ui.task_10.hide()
+
+
+
     def init_events(self):
         #SELECT name,disc,place,time,length FROM events  WHERE time > NOW() ORDER BY time;
         info = db.check_events()
         count = db.count_events()
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        if (True):
+        self.ui.ag_1.hide()
+        self.ui.ag_2.hide()
+        self.ui.ag_3.hide()
+        if (count > 0):
+            self.ui.ag_1.show()
             first_info = info[0]
             # 2021-05-20 15:49:58.127311+03:00
             self.ui.event_name.setText(first_info[0])
@@ -91,6 +139,7 @@ class main_win(QtWidgets.QMainWindow):
             month = months[int(s_time[5:7]) - 1]
             self.ui.mon_1.setText(month)
         if (count > 1):
+            self.ui.ag_2.show()
             second_info = info[1]
             self.ui.event_name_2.setText(second_info[0])
             self.ui.event_desc_2.setText(second_info[1])
@@ -103,6 +152,7 @@ class main_win(QtWidgets.QMainWindow):
             month = months[int(s_time[5:7]) - 1]
             self.ui.mon_2.setText(month)
         if (count > 2):
+            self.ui.ag_3.show()
             th_info = info[2]
             self.ui.event_name_3.setText(th_info[0])
             self.ui.event_desc_3.setText(th_info[1])
@@ -165,8 +215,9 @@ class Auth(QtWidgets.QMainWindow):
             return (0)
     # def logup(self):
 
-app = QtWidgets.QApplication([])
-application = Auth()
-db = db()
-application.show()
-sys.exit(app.exec_())
+if __name__=="__main__":
+    app = QtWidgets.QApplication([])
+    application = Auth()
+    db = db()
+    application.show()
+    sys.exit(app.exec_())
