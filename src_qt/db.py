@@ -13,6 +13,31 @@ class db():
         cur.execute("SELECT version();\n")
         print(cur.fetchall())
         cur.close()
+
+    def add_task(self,name,text,date):
+        def add(recipient_id,text,date):
+            cursor = self.conn.cursor()
+            print(date)
+            date_dst = date[19:30]
+            try:
+                cursor.execute(f"INSERT INTO tasks (text,owner_id,recipient_id,deadline)"
+                           f"VALUES ('{text}','{self.id}','{recipient_id[0]}','{date_dst}');")
+                print("INSERT 0 1")
+            except TypeError:
+                return 0
+            self.conn.commit()
+            cursor.close()
+            return 1
+
+        cursor = self.conn.cursor()
+        try:
+            cursor.execute(f"SELECT id FROM users WHERE name = '{name}';")
+        except TypeError:
+            return 0
+        recipient_id = cursor.fetchone()
+        cursor.close()
+        return add(recipient_id,text,date)
+
     def chaeck_pwd(self,name):
         cursor = self.conn.cursor()
         cursor.execute(f"SELECT pwd,id FROM users WHERE name = '{name}';")
@@ -56,16 +81,21 @@ class db():
         return ret
     def check_tasks(self):
         cursor = self.conn.cursor()
-        cursor.execute(f"SELECT text,owner_id,recipient_id,users.name FROM tasks "
+        cursor.execute(f"SELECT text,users.name,tasks.id,tasks.deadline FROM tasks "
                        f"INNER JOIN users ON users.id = tasks.owner_id WHERE recipient_id = {self.id};")
         ret = cursor.fetchall()
         cursor.close()
         return ret
-
+    def del_task(self,id):
+        cursor = self.conn.cursor()
+        cursor.execute(f"DELETE FROM tasks WHERE id = {int(id)}")
+        self.conn.commit()
+        cursor.close()
     def check_events(self):
         def clean_old():
             cursor = self.conn.cursor()
             cursor.execute("DELETE FROM events WHERE time < date(now())")
+            self.conn.commit()
             cursor.close()
         def get_events():
             cursor = self.conn.cursor()
@@ -73,10 +103,11 @@ class db():
             ret = cursor.fetchall()
             cursor.close()
             return ret
-
         clean_old()
         # self.count = count_events()
         # print(f"count = {self.count}\n")
         info = get_events()
         # print(info)
         return info
+    # def add_task(self):
+

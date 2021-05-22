@@ -11,7 +11,7 @@ $(NAME):
 	mv main.spec ./app
 
 py:
-	#python3 $(SRC_BOT) &
+	python3 $(SRC_BOT) &
 	python3 $(SRC_DESC)
 
 run:
@@ -20,6 +20,9 @@ run:
 
 kill:
 	ps -ale | pgrep  python3 | xargs kill
+
+ui:
+	sh src_qt/disigner/ui.sh
 
 
 #clean:

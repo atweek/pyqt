@@ -1,13 +1,14 @@
 # from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 import sys
-import time
+from PyQt5.QtCore import Qt
 from disigner.login import Ui_Dialog as Ui_Auth
 from disigner.mainwin import Ui_Dialog as Ui_MAIN
 from disigner.singup import Ui_Dialog as Ui_LOGUP
-from disigner.tg_warning import Ui_Dialog as Ui_Tg_Warning
+from disigner.tasks import Ui_Dialog as UI_TASKS
 from db import db
+import datetime
 #pyuic5 test.ui -o test.py -x
 
 
@@ -56,13 +57,49 @@ class logup_win(QtWidgets.QMainWindow):
             self.ui.phomew.show()
             flag = 1
         if (flag == 0):
-            db.logup(self.ui.name.text(), self.ui.pwd.text(), self.ui.phone.text(), self.ui.email.text(), self.ui.tg.text())
+            db.logup(self.ui.name.text(), self.ui.pwd.text(), self.ui.phone.text(),
+                     self.ui.email.text(), self.ui.tg.text())
             self.destroy()
-            self.application = Auth()
-            self.application.show()
-
+            application = Auth()
+            application.show()
     def init_UI(self):
         self.setWindowTitle("diplome")
+    def keyPressEvent(self, e):
+        if e.key() == Qt.Key_Escape:
+            self.close()
+            exit(0)
+
+class tasks_win(QtWidgets.QMainWindow):
+    def keyPressEvent(self, e):
+
+        if e.key() == Qt.Key_Escape:
+            self.close()
+            exit(0)
+    def __init__(self):
+        super(tasks_win, self).__init__()
+        self.ui = UI_TASKS()
+        self.ui.setupUi(self)
+        self.init_UI()
+    def init_UI(self):
+
+        def init_add_task():
+            name = self.ui.name.text()
+            text = self.ui.textEdit.toPlainText()
+            date = str(self.ui.dateEdit.date())
+            if (db.add_task(name,text,date) == 0):
+                self.ui.label_3.show()
+            else:
+                self.destroy()
+            # main_win.update(main_win.init_UI())
+
+        self.ui.label_3.hide()
+        self.setWindowTitle("diplome")
+        self.ui.dateEdit.setDate(datetime.date.today())
+        self.ui.name.setPlaceholderText("  enter the recipient's nickname")
+        self.ui.textEdit.setPlaceholderText("  enter task")
+        self.ui.push.clicked.connect(init_add_task)
+        # main_win.destroy(
+
 
 class main_win(QtWidgets.QMainWindow):
     def __init__(self):
@@ -70,15 +107,116 @@ class main_win(QtWidgets.QMainWindow):
         self.ui = Ui_MAIN()
         self.ui.setupUi(self)
         self.init_UI()
-        # db.check_events()
         self.init_events()
         self.off_task()
         self.on_task()
         self.init_task()
+        self.ui.checkBox.clicked.connect(self.del_tasc_1)
+        self.ui.checkBox_2.clicked.connect(self.del_tasc_2)
+        self.ui.checkBox_3.clicked.connect(self.del_tasc_3)
+        self.ui.checkBox_4.clicked.connect(self.del_tasc_4)
+        self.ui.checkBox_5.clicked.connect(self.del_tasc_5)
+        self.ui.checkBox_6.clicked.connect(self.del_tasc_6)
+        self.ui.checkBox_7.clicked.connect(self.del_tasc_7)
+        self.ui.checkBox_8.clicked.connect(self.del_tasc_8)
+        self.ui.checkBox_9.clicked.connect(self.del_tasc_9)
+        self.ui.checkBox_10.clicked.connect(self.del_tasc_10)
+        self.ui.toolButton.clicked.connect(self.add_task)
+        self.ui.main.clicked.connect(self.rest)
+        self.ui.tasks.clicked.connect(self.add_task)
+
+    def rest(self):
+        self.destroy()
+        self.application = main_win()
+        self.application.show()
+    def keyPressEvent(self, e):
+
+        if e.key() == Qt.Key_Escape:
+            self.close()
+            exit(0)
+
+    # def update(self):
+    #
+    #     self.on_task()
+    #     self.init_task()
+
+    def add_task(self):
+        self.application_2 = tasks_win()
+        self.application_2.show()
+    def del_tasc_1(self):
+        self.ui.task_1.hide()
+        db.del_task(self.info[0][2])
+    def del_tasc_2(self):
+        self.ui.task_2.hide()
+        db.del_task(self.info[1][2])
+    def del_tasc_3(self):
+        self.ui.task_3.hide()
+        db.del_task(self.info[2][2])
+    def del_tasc_4(self):
+        self.ui.task_4.hide()
+        db.del_task(self.info[3][2])
+    def del_tasc_5(self):
+        self.ui.task_5.hide()
+        db.del_task(self.info[4][2])
+    def del_tasc_6(self):
+        self.ui.task_6.hide()
+        db.del_task(self.info[5][2])
+    def del_tasc_7(self):
+        self.ui.task_7.hide()
+        db.del_task(self.info[6][2])
+    def del_tasc_8(self):
+        self.ui.task_8.hide()
+        db.del_task(self.info[7][2])
+    def del_tasc_9(self):
+        self.ui.task_9.hide()
+        db.del_task(self.info[8][2])
+    def del_tasc_10(self):
+        self.ui.task_10.hide()
+        db.del_task(self.info[9][2])
+
     def init_task(self):
-        self.count_t = db.count_task()
-        info = db.check_tasks()
-        print(info)
+        self.info = db.check_tasks()
+        if (self.count_t > 0):
+            self.ui.tdesc_1.setText(self.info[0][0])
+            self.ui.name_1.setText("from: " + self.info[0][1])
+            self.ui.t_date_1.setText("up to: " + str(self.info[0][3]))
+            print(str(self.info[0][3]))
+        if (self.count_t > 1):
+            self.ui.tdesc_2.setText(self.info[1][0])
+            self.ui.name_2.setText("from: " + self.info[1][1])
+            self.ui.t_date_2.setText("up to: " + str(self.info[1][3]))
+        if (self.count_t > 2):
+            self.ui.tdesc_3.setText(self.info[2][0])
+            self.ui.name_3.setText("from: " + self.info[2][1])
+            self.ui.t_date_3.setText("up to: " + str(self.info[2][3]))
+        if (self.count_t > 3):
+            self.ui.tdesc_4.setText(self.info[3][0])
+            self.ui.name_4.setText("from: " + self.info[3][1])
+            self.ui.t_date_4.setText("up to: " + str(self.info[3][3]))
+        if (self.count_t > 4):
+            self.ui.tdesc_5.setText(self.info[4][0])
+            self.ui.name_5.setText("from: " + self.info[4][1])
+            self.ui.t_date_5.setText("up to: " + str(self.info[4][3]))
+        if (self.count_t > 5):
+            self.ui.tdesc_6.setText(self.info[5][0])
+            self.ui.name_6.setText("from: " + self.info[5][1])
+            self.ui.t_date_6.setText("up to: " + str(self.info[5][3]))
+        if (self.count_t > 6):
+            self.ui.tdesc_7.setText(self.info[6][0])
+            self.ui.name_7.setText("from: " + self.info[6][1])
+            self.ui.t_date_7.setText("up to: " + str(self.info[6][3]))
+        if (self.count_t > 7):
+            self.ui.tdesc_8.setText(self.info[7][0])
+            self.ui.name_8.setText("from: " + self.info[7][1])
+            self.ui.t_date_8.setText("up to: " + str(self.info[7][3]))
+        if (self.count_t > 8):
+            self.ui.tdesc_9.setText(self.info[8][0])
+            self.ui.name_9.setText("from: " + self.info[8][1])
+            self.ui.t_date_9.setText("up to: " + str(self.info[8][3]))
+        if (self.count_t > 9):
+            self.ui.tdesc_10.setText(self.info[9][0])
+            self.ui.name_10.setText("from: " + self.info[9][1])
+            self.ui.t_date_10.setText("up to: " + str(self.info[9][3]))
 
     def on_task(self):
         self.count_t = db.count_task()
@@ -113,8 +251,6 @@ class main_win(QtWidgets.QMainWindow):
         self.ui.task_8.hide()
         self.ui.task_9.hide()
         self.ui.task_10.hide()
-
-
 
     def init_events(self):
         #SELECT name,disc,place,time,length FROM events  WHERE time > NOW() ORDER BY time;
@@ -164,7 +300,6 @@ class main_win(QtWidgets.QMainWindow):
             # self.ui.mon_2.setText(second_info[6])
             month = months[int(s_time[5:7]) - 1]
             self.ui.man_3.setText(month)
-    # sys.exit(app.exec_())
 
 
     def init_UI(self):
@@ -182,6 +317,11 @@ class Auth(QtWidgets.QMainWindow):
         self.ui = Ui_Auth()
         self.ui.setupUi(self)
         self.init_UI()
+    def keyPressEvent(self, e):
+
+        if e.key() == Qt.Key_Escape:
+            self.close()
+            exit(0)
     def init_UI(self):
         self.setWindowTitle("diplome")
         self.setWindowIcon(QIcon("./img/fre-icon-avatar-126486.png"))
@@ -201,7 +341,6 @@ class Auth(QtWidgets.QMainWindow):
         try:
             real_pwd = db.chaeck_pwd(name)
             # real_pwd = real_pwd[0]
-            print(id)
         except TypeError:
             self.ui.no.show()
         pwd = self.ui.pwd.text()
