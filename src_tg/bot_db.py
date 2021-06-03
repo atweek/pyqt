@@ -13,11 +13,12 @@ print(cur.fetchall())
 cur.close()
 
 def bot_cheak_user(name):
+    global user_id
     cursor = conn.cursor()
-    cursor.execute(f"SELECT tg_id FROM users WHERE tg = '{name}';")
+    cursor.execute(f"SELECT id,tg_id FROM users WHERE tg = '{name}';")
     tg_id = cursor.fetchone()
     cursor.close()
-    if tg_id[0] == None:
+    if tg_id[1] == None:
         return -1
     else:
         return tg_id
@@ -41,4 +42,36 @@ def event(i):
     time = str(info[i][3])
     # time1 = str(time)
     t = f"{info[i][0]}\n{info[i][1]}\n{info[i][2]}\n{time[0:19]}"
+    return t
+def task_len(user_id):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT COUNT(*) FROM tasks WHERE recipient_id = '{user_id}'")
+    ret = cursor.fetchone()[0]
+    cursor.close()
+    print(ret)
+    print("\n" + str(user_id))
+    return ret
+def get_id(name):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT id FROM users WHERE tg = '{name}'")
+    info = cursor.fetchone()[0]
+    cursor.close()
+    return info
+
+def get_name(user_id):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT name FROM users WHERE id = '{user_id}'")
+    info = cursor.fetchone()[0]
+    cursor.close()
+    return info
+
+def task(i,user_id):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT text, deadline,owner_id FROM tasks WHERE recipient_id = '{user_id}'")
+    info = cursor.fetchall()
+    cursor.close()
+    time = str(info)
+    # time1 = str(time)
+    t = f"{info[i][0]}\n{info[i][1]}\n{get_name(info[i][2])}\n"
+    print(t)
     return t
