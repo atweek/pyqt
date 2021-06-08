@@ -75,3 +75,18 @@ def task(i,user_id):
     t = f"{info[i][0]}\n{info[i][1]}\n{get_name(info[i][2])}\n"
     print(t)
     return t
+def contact(name):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT tg FROM users WHERE name = '{name}'")
+    info = cursor.fetchall()
+    cursor.close()
+    try:
+        return info[0]
+    except:
+        return -1
+
+def change(pwd,name):
+    cursor = conn.cursor()
+    cursor.execute(f"UPDATE users SET pwd = '{pwd}' WHERE tg = '{name}';")
+    conn.commit()
+    cursor.close()

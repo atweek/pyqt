@@ -10,10 +10,11 @@ bot = telebot.TeleBot(keys.token)
 # ------------------LANG
 lang_flag = 0
 pwd_flag = 0
+who_flag = 0
 lang = {"think_ru": "данные записаны", "think_us": "data recorded", "what_us": "What you need to do?","what_ru": "Что мне сделать?",
         "help_ru":"Используйте опции на клавиатуре для получения инофрмации. \nдля создания записей используйте приложение",
         "help_us":"Use the options on the keyboard to get information. \nto create records, use the app",
-        "no_com_ru":"такой команды нет", "no_com_us":"there is no such command" }
+        "no_com_ru":"такой команды нет", "no_com_us":"there is no such command","who_ru":"Кого вы хотите найти ?","who_us":"Who do you want to find?" }
 # ------------------
 flag = 1
 def lang_keyboard():
@@ -43,7 +44,8 @@ def main_keyboard():
     item_activity = types.KeyboardButton('Мероприятия')
     item_contact = types.KeyboardButton('Контакты')
     item_pwd = types.KeyboardButton('восстановление пароля')
-    keyboard.add(item_help,item_activity, item_meeting, item_contact,item_pwd)
+    item_wifi = types.KeyboardButton('wi-fi')
+    keyboard.add(item_help,item_activity, item_meeting, item_contact,item_pwd,item_wifi)
     return keyboard
 
 def us_main_keyboard():
@@ -53,7 +55,8 @@ def us_main_keyboard():
     item_activity = types.KeyboardButton('Events')
     item_contact = types.KeyboardButton('Contacts')
     item_pwd = types.KeyboardButton('recover the password')
-    keyboard.add(item_help,item_activity, item_meeting, item_contact,item_pwd)
+    item_wifi = types.KeyboardButton('wi-fi')
+    keyboard.add(item_help,item_activity, item_meeting, item_contact,item_pwd,item_wifi)
     return keyboard
 
 
@@ -87,6 +90,7 @@ def send_text(message):
     global flag
     global lang_flag
     global pwd_flag
+    global who_flag
     if flag == 0:
         if  message.text == '🇺🇸':
             lang_flag = 0
@@ -114,15 +118,37 @@ def send_text(message):
         if pwd_flag == 1:
             markup = types.ReplyKeyboardRemove(selective=False)
             if message.text == 'Написать свой' or message.text == 'Write your own':
-                bot.send_message(message.chat.id, "Какой пароль мне записать?",reply_markup=markup)
+                if lang_flag == 0:
+                    bot.send_message(message.chat.id, "Enter your password", reply_markup=markup)
+                else:
+                    bot.send_message(message.chat.id, "Какой пароль мне записать?", reply_markup=markup)
                 pwd_flag = 2
             if message.text == 'Сгенерировать пароль' or message.text == 'generated password':
-                bot.send_message(message.chat.id, generator(), reply_markup = main_keyboard())
+                pwd = generator()
+                if lang_flag == 0:
+                    bot.send_message(message.chat.id,pwd , reply_markup = us_main_keyboard())
+                else:
+                    bot.send_message(message.chat.id, pwd, reply_markup=main_keyboard())
+                bot_db.change(pwd, message.from_user.username)
                 pwd_flag = 0
         elif pwd_flag == 2:
-            bot.send_message(message.chat.id, 'ok', reply_markup = main_keyboard())
+            if lang_flag == 0:
+                bot.send_message(message.chat.id, 'ok', reply_markup=us_main_keyboard())
+            else:
+                bot.send_message(message.chat.id, 'ок', reply_markup = main_keyboard())
             pwd_flag = 0
-            print(message.text)
+            bot_db.change(message.text, message.from_user.username)
+        elif who_flag == 1:
+            info = bot_db.contact(message.text)
+            if info == -1:
+                if lang_flag == 0:
+                    info = "not found"
+                else:
+                    info = "не найдено"
+            bot.send_message(message.chat.id, info, reply_markup = main_keyboard())
+            who_flag = 0
+        elif message.text == 'wi-fi':
+            bot.send_message(message.chat.id, "Moscow\n21school-open\npwd: 21school")
         elif message.text == 'восстановление пароля' or message.text == 'recover the password':
             if lang_flag == 0:
                 bot.send_message(message.chat.id, 'Do you want to write your own or generate a password?',reply_markup=pwd_keyboard_us())
@@ -147,6 +173,14 @@ def send_text(message):
             while i < info_len:
                 bot.send_message(message.chat.id, bot_db.task(i,bot_db.get_id(message.from_user.username)))
                 i += 1
+        elif message.text == 'Контакты' or message.text == 'Contacts':
+            markup = types.ReplyKeyboardRemove(selective=False)
+            if (lang_flag == 0):
+                bot.send_message(message.chat.id, lang.get("who_us"), reply_markup=markup)
+            else:
+                bot.send_message(message.chat.id, lang.get("who_ru"), reply_markup=markup)
+            who_flag = 1
+
         else:
             if lang_flag == 0:
                 bot.send_message(message.chat.id, lang.get("no_com_us"))
